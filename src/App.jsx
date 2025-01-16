@@ -13,15 +13,10 @@ function App() {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (event) => {
-      setDarkMode(event.matches);
-    };
+    const handleChange = (event) => setDarkMode(event.matches);
 
     mediaQuery.addEventListener("change", handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   return (
@@ -31,11 +26,7 @@ function App() {
       } bg-light-light dark:bg-dark-dark overflow-x-hidden px-3 sm:px-6 h-screen w-full transition-colors duration-500`}
     >
       <div className="max-w-[600px] mx-auto">
-        <SearchBar
-          weather={weather}
-          darkmode={darkmode}
-          setDarkMode={setDarkMode}
-        />
+        <SearchBar darkmode={darkmode} setDarkMode={setDarkMode} />
         {isLoading && <Loading />}
         {error && <p className="text-red-500 mt-5 text-center">{error} ❌</p>}
         {!isLoading && !error && <WeatherDisplay weather={weather} />}
